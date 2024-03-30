@@ -3,9 +3,9 @@
 
 # L'art de la ligne de commande
 
-*Note : Je recherche un nouvel auteur principal (éventuellement rémunéré) pour aider à faire de ce document un guide plus complet.
-Bien que très populaire, il pourrait être à la fois plus approfondi et plus utile.
-Si vous aimer écrire, n'êtes pas loin d'être un expert du sujet et envisagez d'aider, merci de me laisser un message à josh (0x40) holloway.com. –[jlevy](https://github.com/jlevy), [Holloway](https://www.holloway.com)*
+*Note : Je prévois de réviser le document et suis à la recherche d'un nouveau co-auteur pour en faire un guide plus complet.
+Bien que très populaire, il pourrait être plus étendu et un peu plus approfondi.
+Si vous aimer écrire, n'êtes pas loin d'être un expert du sujet et êtes disposé à contribuer, veuillez me laisser un message à josh (0x40) holloway.com. –[jlevy](https://github.com/jlevy), [Holloway](https://www.holloway.com). Merci !*
 
 - [Méta](#méta)
 - [Notions de base](#notions-de-base)
@@ -252,7 +252,7 @@ Une alternative plus légère pour la persistance des sessions seulement est [`d
 
 - Quelques autres options relatives à ssh sont sensibles pour la sécurité et ne devraient être activées qu'avec la plus grande prudence. Par exemple, sur des sous-réseaux, des hôtes ou des réseaux sûrs&nbsp;: `StrictHostKeyChecking=no`, `ForwardAgent=yes`.
 
-- Envisagez [`mosh`](https://mosh.mit.edu/) comme une alternative à ssh qui utilise UDP, évitant ainsi les pertes de connexion et ajoutant du confort en situation de mobilité (exige une installation côté serveur).
+- Envisagez [`mosh`](https://mosh.org/) comme une alternative à ssh qui utilise UDP, évitant ainsi les pertes de connexion et ajoutant du confort en situation de mobilité (exige une installation côté serveur).
 
 - Pour obtenir les permissions d'un fichier en octal, utile pour configurer le système mais non fournit par `ls`, utilisez quelque chose comme
 ```sh
