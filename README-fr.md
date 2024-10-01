@@ -3,28 +3,33 @@
 
 # L'art de la ligne de commande
 
-*Note : Je prévois de réviser le document et suis à la recherche d'un nouveau co-auteur pour en faire un guide plus complet.
-Bien que très populaire, il pourrait être plus étendu et un peu plus approfondi.
-Si vous aimer écrire, n'êtes pas loin d'être un expert du sujet et êtes disposé à contribuer, veuillez me laisser un message à josh (0x40) holloway.com. –[jlevy](https://github.com/jlevy), [Holloway](https://www.holloway.com). Merci !*
+*Note : Je prévois de réviser ce document et je recherche un co-auteur pour en faire un guide plus complet.
+Même s'il est très populaire, ce guide pourrait être plus complet et détaillé.
+Si vous aimez écrire, êtes presque expert dans ce domaine et souhaitez contribuer, veuillez m'envoyer un message à josh (0x40) holloway.com. –[jlevy](https://github.com/jlevy), [Holloway](https://www.holloway.com). Merci !*
 
-- [Méta](#méta)
-- [Notions de base](#notions-de-base)
-- [Utilisation quotidienne](#utilisation-quotidienne)
-- [Traitement des fichiers et des données](#traitement-des-fichiers-et-des-données)
-- [Débogage du système](#débogage-du-système)
-- [Unilignes](#unilignes)
-- [Obscures mais utiles](#obscures-mais-utiles)
-- [Uniquement macOS](#uniquement-macos)
-- [Uniquement Windows](#uniquement-windows)
-- [Autres ressources](#autres-ressources)
-- [Avertissement](#avertissement)
+- [L'art de la ligne de commande](#lart-de-la-ligne-de-commande)
+  - [Méta](#méta)
+  - [Notions de base](#notions-de-base)
+  - [Utilisation quotidienne](#utilisation-quotidienne)
+  - [Traitement des fichiers et des données](#traitement-des-fichiers-et-des-données)
+  - [Débogage du système](#débogage-du-système)
+  - [Unilignes](#unilignes)
+  - [Obscures mais utiles](#obscures-mais-utiles)
+  - [Spécifique à macOS](#spécifique-à-macos)
+  - [Spécifique à Windows](#spécifique-à-windows)
+    - [Différentes manières d'obtenir les outils Unix sous Windows](#différentes-manières-dobtenir-les-outils-unix-sous-windows)
+    - [Outils en ligne de commande utiles pour Windows](#outils-en-ligne-de-commande-utiles-pour-windows)
+    - [Trucs et astuces à propos de Cygwin](#trucs-et-astuces-à-propos-de-cygwin)
+  - [Autres ressources](#autres-ressources)
+  - [Avertissement](#avertissement)
+  - [Licence](#licence)
 
 
 ![curl -s 'https://raw.githubusercontent.com/jlevy/the-art-of-command-line/master/README.md' | egrep -o '`\w+`' | tr -d '`' | cowsay -W50](cowsay.png)
 
-La maîtrise de la ligne de commande est une compétence souvent négligée ou considérée ésotérique, pourtant elle améliore de façon évidente et subtile votre habilité et votre productivité en tant qu'ingénieur.
+La maîtrise de la ligne de commande est une compétence souvent négligée ou considérée mystérieuse, pourtant elle améliore de façon évidente et subtile votre habilité et votre productivité en tant qu'ingénieur.
 Ceci est une sélection de notes et d'astuces sur l'utilisation de la ligne de commande que nous avons trouvées utiles en travaillant avec Linux.
-Certaines sont élémentaires, d'autres sont assez spécifiques, complexes ou obscures.
+Certaines astuces sont élémentaires, d'autres sont plus spécifiques, complexes, ou obscures.
 Cette page n'est pas bien longue, mais si vous pouvez retenir et vous servir de tout ce qui s'y trouve, alors vous saurez beaucoup de choses.
 
 Ce document est le fruit du travail de [nombreux auteurs et traducteurs](AUTHORS.md).
@@ -38,29 +43,29 @@ Une partie de celui-ci a été [initialement](http://www.quora.com/What-are-some
 Contexte :
 
 - Ce guide est destiné aux débutants et aux utilisateurs chevronnés.
-Les objectifs sont l'*envergure* (tout est important), la *spécificité* (donner des exemples concrets des cas les plus courants) et la *concision* (éviter tout ce qui n'est pas essentiel et les digressions disponibles facilement ailleurs).
-Chaque astuce est indispensable dans certaines situations ou fait gagner beaucoup de temps par rapport aux solutions alternatives.
-- Il est écrit pour Linux, à l'exception des sections « [Uniquement macOS](#uniquement-macos) » et « [Uniquement Windows](#uniquement-windows) ».
-Beaucoup d'items s'appliquent ou peuvent être installés sur d'autres Unices ou macOS (ou même Cygwin).
-- L'accent est mis sur l'utilisation interactive de Bash, bien que de nombreuses astuces s'appliquent aux autres shells et à l'écriture de scripts en Bash.
-- Il inclut les commandes « standard » d'Unix aussi bien que celles qui nécessitent l'installation de paquets spéciaux &mdash; tant qu'ils sont suffisamment importants pour mériter d'être mentionnés.
+Les objectifs sont la *complétude* (tout est important), la *précision* (donner des exemples concrets des cas les plus courants) et la *concision* (éviter tout ce qui est superflu et les digressions facilement trouvables ailleurs).
+Chaque astuce est indispensable dans certaines situations et permet de gagner un temps précieux par rapport aux solutions alternatives.
+- Ce guide est conçu pour Linux, à l'exception des sections « [Spécifique à macOS](#spécifique-à-macos) » et « [Spécifique à Windows](#spécifique-à-windows) ».
+Beaucoup d'éléments s'appliquent ou peuvent être installés sur d'autres Unices ou macOS (ou même Cygwin).
+- Le guide met l'accent sur l'utilisation interactive de Bash, bien que de nombreuses astuces s'appliquent aux autres shells et à l'écriture de scripts en Bash.
+- Il inclut aussi bien les commandes « standard » d'Unix que celles nécessitant l'installation de paquets supplémentaires &mdash; tant qu'ils sont suffisamment importants pour mériter d'être mentionnés.
 
 Remarques :
 
 - Afin que le guide tienne sur une seule page, du contenu est implicitement inclus par référence.
-Vous êtes suffisamment intelligents pour rechercher des renseignements ailleurs une fois que vous avez l'idée ou la commande à googler.
-Utilisez `apt`, `yum`, `dnf`, `pacman`, `pip` ou `brew` (selon votre distribution ou OS) pour installer de nouveaux programmes.
-- Allez sur [Explainshell](http://explainshell.com) pour obtenir de l'aide à propos des commandes, options, tubes, etc.
+Vous avez la capacité de rechercher des renseignements ailleurs une fois que vous avez l'idée ou la commande à googler.
+Utilisez `apt`, `yum`, `dnf`, `pacman`, `pip` ou `brew` (selon votre distribution ou système d'exploitation) pour installer de nouveaux programmes.
+- Allez sur [Explainshell](http://explainshell.com) pour obtenir de l'aide à propos des commandes, options, tubes (pipes), etc.
 
 
 ## Notions de base
 
-- Apprenez les bases de Bash.
-En fait, tapez `man bash` et parcourez toute la page&#8239;; elle est relativement facile à suivre et pas si longue.
+- Maîtrisez les bases de Bash.
+Tapez `man bash` et parcourez toute la page&#8239;; elle est relativement facile à suivre et pas si longue.
 Les shells alternatifs peuvent être intéressants, mais Bash est puissant et disponible partout (apprendre *seulement* zsh, fish, etc., bien que cela soit tentant sur votre ordinateur portable, vous limite dans bien des situations, comme par exemple lors de l'utilisation de vrais serveurs).
 
 - Apprenez à bien utiliser au moins un éditeur en mode texte.
-L'éditeur `nano` est l'un des plus simples pour de l'édition simple (ouvrir, modifier, sauvegarder, rechercher).
+L'éditeur `nano` est l'un des plus simples pour des tâches basiques (ouvrir, modifier, sauvegarder, rechercher).
 Cependant pour un usage avancé dans un terminal, rien ne remplace le vénérable Vim (`vi`), éditeur difficile à prendre en main, mais rapide et très complet.
 De nombreuses personnes utilisent également le classique Emacs, surtout pour d'importantes tâches d'édition (bien sûr, tout développeur moderne de logiciels travaillant sur un vaste projet n'utilise probablement pas un simple éditeur en mode texte et devrait donc aussi se familiariser avec des outils et des EDI graphiques modernes).
 
@@ -71,7 +76,7 @@ De nombreuses personnes utilisent également le classique Emacs, surtout pour d'
   Utilisez `type command` pour déterminer si une commande est un exécutable, une commande interne du shell ou un alias.
   - `curl cheat.sh/commande` fournit une *cheatsheet* concise comprenant des exemples courants d'utilisation d'une commande shell.
 
-- Apprenez à rediriger les entrées et sorties au moyen de `>` et `<`, et à créer des tubes avec `|`.
+- Apprenez à rediriger les entrées et sorties au moyen de `>` et `<`, et à créer des tubes (pipes) avec `|`.
 Sachez que `>` écrase le fichier de sortie et `>>` sert à ajouter.
 Renseignez-vous sur stdout et stderr.
 
@@ -79,7 +84,7 @@ Renseignez-vous sur stdout et stderr.
 
 - Familiarisez-vous avec la gestion des processus avec Bash&nbsp;: `&`, **ctrl-z**, **ctrl-c**, `jobs`, `fg`, `bg`, `kill`, etc.
 
-- Apprenez `ssh` et les principes de l'authentification sans mot de passe à l'aide de `ssh-agent`, `ssh-add`, etc.
+- Maîtrisez `ssh` et les principes de l'authentification sans mot de passe à l'aide de `ssh-agent`, `ssh-add`, etc.
 
 - Les bases de la gestion des fichiers&nbsp;: `ls` et `ls -l` (en particulier, apprenez la signification de chacune des colonnes de `ls -l`), `less`, `head`, `tail` et `tail -f` (ou mieux, `less +F`), `ln` et `ln -s` (apprenez les différences et les avantages des liens durs par rapport aux liens symboliques), `chown`, `chmod`, `du` (pour un rapide résumé de l'espace disque occupé&nbsp;: `du -hs *`).
 Pour la gestion du système de fichiers&nbsp;: `df`, `mount`, `fdisk`, `mkfs`, `lsblk`.
@@ -87,23 +92,23 @@ Apprenez ce qu'est un inode (`ls -i` ou `df -i`).
 
 - Les bases de l'administration réseau&nbsp;: `ip`, `ifconfig`, `dig`, `traceroute` et `route`.
 
-- Apprenez à vous servir d'un logiciel de gestion de versions tel que `git`, et utilisez-le.
+- Apprenez à vous servir d'un système de gestion de versions tel que `git`, et adoptez-le.
 
-- Apprenez les expressions régulières et les différents drapeaux de `grep` et `egrep`.
+- Maîtrisez les expressions régulières et les différents drapeaux de `grep` et `egrep`.
 Les options `-i`, `-o`, `-v`, `-A`, `-B` et `-C` sont bonnes à connaître.
 
 - Apprenez à utiliser `apt-get`, `yum`, `dnf` ou `pacman` (selon la distribution) pour trouver et installer des paquets.
-Assurez-vous d'avoir `pip` pour installer des outils en ligne de commande écrits en Python (quelques-uns ci-dessous sont plus faciles à installer avec `pip`).
+Assurez-vous que `pip` est installé afin de pouvoir installer des outils en ligne de commande écrits en Python.  Certains des outils mentionnés ci-dessous sont d'ailleurs plus simples à installer via
 
 
 ## Utilisation quotidienne
 
 - En Bash, utilisez **Tab** pour compléter les arguments ou lister toutes les commandes disponibles, et **ctrl-r** pour rechercher dans l'historique des commandes (tapez pour rechercher, appuyez sur **ctrl-r** plusieurs fois pour parcourir les différentes correspondances, appuyez sur **Enter** pour exécuter la commande trouvée ou sur la flèche droite pour l'éditer).
 
-- En Bash, utilisez **ctrl-w** pour effacer le mot précédent et **ctrl-u** pour effacer tout ce qui précède le curseur.
-Utilisez **alt-b** et **alt-f** pour se déplacer mot par mot, **ctrl-a** pour déplacer le curseur au début de la ligne, **ctrl-e** pour déplacer le curseur à la fin de la ligne, **ctrl-k** pour effacer depuis le curseur jusqu'à la fin de la ligne, **ctrl-l** pour effacer l'écran.
+- En Bash, utilisez **ctrl-w** pour supprimer le mot précédent et **ctrl-u** pour effacer tout ce qui précède le curseur.
+Utilisez **alt-b** et **alt-f** pour déplacer le curseur mot par mot, **ctrl-a** pour déplacer le curseur au début de la ligne, **ctrl-e** pour déplacer le curseur à la fin de la ligne, **ctrl-k** pour supprimer depuis le curseur jusqu'à la fin de la ligne, **ctrl-l** pour effacer l'écran.
 Voir `man readline` pour la liste des raccourcis clavier par défault de Bash.
-Il y en a beaucoup.
+De nombreux raccourcis sont disponibles.
 Par exemple **alt-.** fait défiler les arguments précédents et **alt-*** développe un glob.
 
 - Sinon, si vous adorez les combinaisons de touches dans le style vi, utilisez `set -o vi` (`set -o emacs` pour revenir en arrière).
@@ -124,8 +129,7 @@ Dans les scripts shell, désignez le répertoire personnel par `$HOME`.
 - Si vous êtes au milieu de la saisie d'une commande mais que vous changez d'avis, tapez **alt-#** pour ajouter `#` au début de la ligne et l'entrer comme un commentaire (ou utilisez **ctrl-a**, **#**, **enter**).
 Vous pouvez alors y revenir plus tard à l'aide de la commande history.
 
-- Utilisez `xargs` (ou `parallel`).
-C'est très puissant.
+- Utilisez `xargs` (ou `parallel`), deux outils très puissants pour exécuter des commandes en parallèle.
 Remarquez que vous pouvez contrôler le nombre d'items à exécuter par ligne (`-L`) ainsi que la parallélisation (`-P`).
 Si vous n'êtes pas sûr d'avoir fait ce qu'il faut, utilisez d'abord `xargs echo`.
 L'option `-I{}` est également pratique.
@@ -139,13 +143,13 @@ Exemples&nbsp;:
 
 - `pgrep` et `pkill` pour rechercher ou envoyer un signal à des processus en fonction de leur nom (`-f` est utile).
 
-- Connaissez les différents signaux que vous pouvez envoyer aux processus.
+- Apprenez les différents signaux que vous pouvez envoyer aux processus.
 Par exemple, pour suspendre l'exécution d'un processus, utilisez `kill -STOP [pid]`.
 Pour la liste complète, consultez `man 7 signal`.
 
 - Utilisez `nohup` ou `disown` pour qu'un processus en arrière-plan reste actif indéfiniment.
 
-- Vérifiez quels sont les processus qui écoutent à l'aide de `netstat -lntp`, `ss -plat` (pour TCP; ajoutez `-u` pour UDP) ou `lsof -iTCP -sTCP:LISTEN -P -n` (qui fonctionne aussi sur macOS). 
+- Vérifiez les processus à l'écoute avec `netstat -lntp`, `ss -plat` (pour TCP; ajoutez `-u` pour UDP) ou `lsof -iTCP -sTCP:LISTEN -P -n` (qui fonctionne aussi sur macOS). 
 
 - Voyez également `lsof` et `fuser` pour la liste des *sockets* et fichiers ouverts.
 
@@ -160,7 +164,7 @@ Ainsi, votre configuration s'appliquera à toutes vos sessions shell.
 - Placez dans `~/.bash_profile` la configuration de vos variables d'environnement ainsi que les commandes à exécuter lorsque vous vous connectez.
 Une configuration séparée est nécessaire lorsque vous vous connectez depuis un gestionnaire de connexion graphique et pour les tâches planifiées par `cron`.
 
-- Synchronisez vos fichiers de configuration (p.&nbsp;ex. `.bashrc` et `.bash_profile`) entre plusieurs ordinateurs avec Git.
+- Synchronisez vos fichiers de configuration (p.&nbsp;ex. `.bashrc` et `.bash_profile`) entre plusieurs machines avec Git.
 
 - Comprennez qu'il convient d'être prudent lorsque des variables et des noms de fichiers contiennent des espaces.
 Mettez vos variables entre guillemets, par exemple `"$FOO"`.
@@ -170,7 +174,7 @@ Pour itérer sur des noms de fichiers contenant des espaces dans une boucle for,
 - Dans les scripts Bash, utilisez `set -x` (ou la variante `set -v` qui enregistre les entrées brutes, y compris les variables non référencées et les commentaires) pour l'affichage d'informations de débogage.
 Utilisez les modes stricts à moins que vous ayez une bonne raison de ne pas le faire&nbsp;: utilisez `set -e` pour interrompre le script en cas d'erreur (code de sortie non nul).
 Utilisez `set -u` pour détecter l'utilisation d'une variable non initialisée.
-Envisagez aussi `set -o pipefail` pour détecter les erreurs dans les tubes (cependant lisez-en plus si vous l'utilisez car ce sujet est un peu délicat).
+Envisagez aussi `set -o pipefail` pour détecter les erreurs dans les tubes (pipes) (cependant lisez-en plus si vous l'utilisez car ce sujet est un peu délicat).
 Pour des scripts plus compliqués, servez-vous également de `trap` pour intercepter EXIT ou ERR.
 Une bonne habitude est de commencer un script comme cela, ce qui lui permettra de détecter les erreurs courantes, de s'interrompre et d'afficher un message&nbsp;:
 ```bash
@@ -250,7 +254,7 @@ Une alternative plus légère pour la persistance des sessions seulement est [`d
       ControlPersist yes
 ```
 
-- Quelques autres options relatives à ssh sont sensibles pour la sécurité et ne devraient être activées qu'avec la plus grande prudence. Par exemple, sur des sous-réseaux, des hôtes ou des réseaux sûrs&nbsp;: `StrictHostKeyChecking=no`, `ForwardAgent=yes`.
+- Quelques autres options relatives à ssh sont critiques pour la sécurité et ne devraient être activées qu'avec la plus grande prudence. Par exemple, sur des sous-réseaux, des hôtes ou des réseaux sûrs&nbsp;: `StrictHostKeyChecking=no`, `ForwardAgent=yes`.
 
 - Envisagez [`mosh`](https://mosh.org/) comme une alternative à ssh qui utilise UDP, évitant ainsi les pertes de connexion et ajoutant du confort en situation de mobilité (exige une installation côté serveur).
 
@@ -277,7 +281,7 @@ Le système vous demandera le mot de passe *de l'utilisateur cible*.
 
 - Sachez que l'argument de la ligne de commande a une [taille limite de 128 Kio](https://wiki.debian.org/CommonErrorMessages/ArgumentListTooLong). L'erreur « Argument list too long » est fréquente avec les jokers qui reconnaissent un grand nombre de fichiers (quand cela se produit des alternatives comme `find` et `xargs` peuvent aider).
 
-- Pour une calculatrice basique (et bien sûr accéder à Python en général), utilisez l'interpréteur `python`.
+- Pour une calculatrice basique (et bien sûr accéder à Python en général), utilisez l'interpréteur (shell) `python`.
 Par exemple,
 ```
 >>> 2+3
@@ -327,7 +331,7 @@ Dans certains cas (tels que les opérations concernant les ensembles et l'unicit
 
 - Vous pouvez modifier l'environnement d'une commande particulière en préfixant son invocation par l'affectation de variables, comme dans `TZ=Pacific/Fiji date`.
 
-- Apprenez `awk` et `sed` pour de l'analyse de données élémentaire.
+- Maîtrisez `awk` et `sed` pour effectuer une analyse de données basique.
 Voir la section [Unilignes](#unilignes) pour des exemples.
 
 Par exemple, pour effectuer la somme de tous les nombres de la troisième colonne d'un fichier texte&nbsp;: `awk '{ x += $3 } END { print x}'`.
@@ -350,7 +354,7 @@ C'est probablement trois fois plus rapide et trois fois plus petit que son équi
 ```
 
 - Selon sa page de manuel, `rsync` est un outil de duplication de fichiers vraiment rapide et incroyablement polyvalent.
-Il est connu pour faire de la synchronisation entre machines, mais est également utile pour un usage local.
+Cet outil est couramment utilisé pour la synchronisation entre machines. Il reste toutefois utile pour un usage local.
 Lorsque les mesures de sécurité l'autorisent, utiliser `rsync` au lieu de `scp` permet de reprendre un transfert interrompu sans devoir le recommencer zéro.
 Il est aussi l'un des outils [les plus rapides](https://web.archive.org/web/20130929001850/http://linuxnote.net/jianingy/en/linux/a-fast-way-to-remove-huge-number-of-files.html) pour effacer un grand nombre de fichiers&nbsp;:
 ```sh
@@ -427,7 +431,7 @@ Pour un aperçu plus étendu et détaillé, utilisez [`glances`](https://github.
 - Pour connaître l'état de la mémoire, exécutez `free` et `vmstat` et comprenez leurs sorties.
 En particulier, ayez à l'esprit que la valeur du « cache » est la mémoire utilisée par le noyau Linux comme cache de fichiers, donc compte comme de la mémoire « libre ».
 
-- Le système de débogage de Java est une autre paire de manche, cependant un truc simple sur la JVM d'Oracle et quelques autres JVMs consiste à exécuter `kill -3 <pid>` pour obtenir une trace complète des appels et une empreinte de la mémoire (y compris des détails sur le ramasse-miettes qui peuvent être hautement instructifs) dans stderr ou des fichiers journaux.
+- Le système de débogage de Java est un autre sujet complexe, cependant un truc simple sur la JVM d'Oracle et quelques autres JVMs consiste à exécuter `kill -3 <pid>` pour obtenir une trace complète des appels et une empreinte de la mémoire (y compris des détails sur le ramasse-miettes qui peuvent être hautement instructifs) dans stderr ou des fichiers journaux.
 Les commandes `jps`, `jstat`, `jstack` et `jmap` de la JDK sont utiles. L'[outil SJK](https://github.com/aragozin/jvm-tools) est plus avancé.
 
 - Utilisez [`mtr`](http://www.bitwizard.nl/mtr/) comme un `traceroute` amélioré pour identifier les problèmes de réseau.
@@ -470,7 +474,7 @@ Il fournit un historique concernant l'usage du CPU, de la mémoire, du réseau, 
 
 Quelques exemples d'assemblages de commandes&nbsp;:
 
-- Il est quelques fois extrèmement utile de pouvoir faire une intersection, union ou différence ensemblistes de fichiers texte à l'aide de `sort` et `uniq`.
+- Il est parfois extrêmement utile de pouvoir faire une intersection, union ou différence ensemblistes de fichiers texte à l'aide de `sort` et `uniq`.
 Supposez que `a` et `b` soient des fichiers texte ne contenant pas de lignes répétées.
 C'est rapide et fonctionne sur des fichiers de taille quelconque jusqu'à plusieurs gigaoctets (le tri n'est pas limité par la capacité mémoire bien que vous puissiez avoir besoin d'utiliser l'option `-T` si `/tmp` est sur une petite partition racine).
 Voyez aussi la remarque à propos de `LC_ALL` ci-dessus et l'option `-u` de `sort` (omise ci-dessous pour plus de clarté).
@@ -480,7 +484,7 @@ Voyez aussi la remarque à propos de `LC_ALL` ci-dessus et l'option `-u` de `sor
     sort a b b | uniq -u > c   # c is set difference a - b
 ```
 
-- Embellissez les différences de deux fichiers JSON en normalisant leur syntaxe, en colorant et en paginant le résultat :
+- Améliorez la présentation des différences entre deux fichiers JSON en normalisant leur syntaxe, en colorant et en paginant le résultat :
 ```
       diff <(jq --sort-keys . < file1.json) <(jq --sort-keys . < file2.json) | colordiff | less -R
 ```
@@ -488,7 +492,7 @@ Voyez aussi la remarque à propos de `LC_ALL` ci-dessus et l'option `-u` de `sor
 - Utilisez `grep . *` pour inspecter rapidement les contenus des fichiers d'un repértoire (chaque ligne est précédé du nom du fichier) ou `head -100 *` (chaque fichier a un titre).
 Cela peut être utile pour des répertoires remplis de fichiers de configuration comme ceux de `/sys`, `/proc`, `/etc`.
 
-- Pour ajouter les nombres de la troisième colonne d'un fichier texte (c'est probablement trois fois plus rapide et trois fois plus petit que son équivalent en Python)&nbsp;:
+- Pour ajouter les nombres de la troisième colonne d'un fichier texte (probablement trois fois plus rapide et trois fois plus petit que son équivalent en Python)&nbsp;:
 ```sh
     awk '{ x += $3 } END { print x }' myfile
 ```
@@ -521,7 +525,7 @@ Si vous voulez un décompte du nombre de requêtes pour chaque valeur de `acct_i
 
 ## Obscures mais utiles
 
-- `expr` : effectue des operations arithmétiques et booléenne, et évalue des expressions régulières.
+- `expr` : effectue des operations arithmétiques et booléennes, et évalue des expressions régulières.
 
 - `m4` : simple macro processeur.
 
@@ -666,7 +670,7 @@ Si vous voulez un décompte du nombre de requêtes pour chaque valeur de `acct_i
 - `fortune`, `ddate` et `sl` : euh, bon, seulement si vous estimez que les locomotives à vapeur et les citations de Jean-Claude Van Damme sont « utiles ».
 
 
-## Uniquement macOS
+## Spécifique à macOS
 
 Ce qui suit ne s'applique *qu'*à macOS.
 
@@ -689,7 +693,7 @@ Pour écrire des scripts Bash multi-plateformes évitez d'utiliser de telles com
 - Pour obtenir des informations sur la version de macOS, utilisez `sw_vers`.
 
 
-## Uniquement Windows
+## Spécifique à Windows
 
 Ce qui suit ne concerne que Windows.
 
